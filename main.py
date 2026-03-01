@@ -36,7 +36,7 @@ class TestSolution:
     def print(self, *args, end='\n'):
         if len(args) == 1:
             args = args[0]
-            if args.__class__ in [int, float, bool]:
+            if args.__class__ in [int, float, bool] or args is None:
                 args = str(args)
         else:
             args = " ".join(list(map(str, list(args))))
