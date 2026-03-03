@@ -24,10 +24,11 @@ class CreateTest:
 
 
 class TestSolution:
-    def __init__(self, taskNumber: int):
+    def __init__(self, taskNumber: int, printout=True):
         self.inpFile = open(f"input_task{taskNumber}", "r").readlines()
         self.outputFile = open(f"output_task{taskNumber}", "w")
         self.input_s_i = 0
+        self.printout = printout
 
     def input(self):
         self.input_s_i += 1
@@ -40,25 +41,27 @@ class TestSolution:
                 args = str(args)
         else:
             args = " ".join(list(map(str, list(args))))
+
         self.outputFile.write(args + end)
-        pprint(args)
-        
+        if self.printout:
+            pprint(args)
+
 
     def testFunction(self, solution_func, checkMemory=True):
         original_print = builtins.print
         original_input = builtins.input
         builtins.print = self.print
         builtins.input = self.input
-        
-        
+
+
         if checkMemory:
             tracemalloc.start()
         time_start = time.perf_counter()
-        
+
         solution_func()
-        
+
         time_end = time.perf_counter()
-        
+
         builtins.input = original_input
         builtins.print = original_print
         print(f"Time to solve: {round(time_end - time_start, 3)} sec")
